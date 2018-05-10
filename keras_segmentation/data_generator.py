@@ -4,7 +4,7 @@ import keras
 
 class DataGenerator(keras.utils.Sequence):
     'Generates data for Keras'
-    def __init__(self, images, labels, batch_size, n_classes, image_dim, num_channels=3, shuffle=True):
+    def __init__(self, images, labels, batch_size, n_classes, image_dim, label_dim, num_channels=3, shuffle=True):
         'Initialization'
         self.images = images
         self.labels = labels
@@ -14,6 +14,7 @@ class DataGenerator(keras.utils.Sequence):
         self.image_dim = image_dim
         self.num_channels = num_channels
         self.num_examples = images.shape[0]
+        self.label_dim = label_dim
         self.on_epoch_end()
         
     def on_epoch_end(self):
@@ -41,7 +42,7 @@ class DataGenerator(keras.utils.Sequence):
         'Generates data containing batch_size samples' # X : (n_samples, *dim, n_channels)
         # Initialization
         X = np.empty((self.batch_size, *self.image_dim, self.num_channels), dtype=np.uint8)
-        y = np.empty((self.batch_size, *self.image_dim, self.n_classes), dtype=np.bool)
+        y = np.empty((self.batch_size, *self.label_dim, self.n_classes), dtype=np.bool)
 
         # Generate data
         for i, indx in enumerate(indexes):

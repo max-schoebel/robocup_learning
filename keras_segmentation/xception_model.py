@@ -7,6 +7,11 @@ from keras import losses
 from keras.optimizers import Adam
 import tensorflow as tf
 
+
+def custom_xentropy(y_true, y_pred):
+    y_true = tf.argmax(y_true, axis=-1)
+    return tf.nn.sparse_softmax_cross_entropy_with_logits(labels=y_true, logits=y_pred)
+
 def xception_segmenter(input_shape, num_classes, optimizer):
     kernel = (3,3)
     pad = 1
@@ -54,9 +59,6 @@ def xception_segmenter(input_shape, num_classes, optimizer):
     # x = Activation('softmax')(x_preactivation)
     
     model = Model(inputs=base_input, outputs= x)# [x, x_preactivation])
-    def custom_xentropy(y_true, y_pred):
-        y_true = tf.argmax(y_true, axis=-1)
-        return tf.nn.sparse_softmax_cross_entropy_with_logits(labels=y_true, logits=y_pred)
     model.compile(optimizer=optimizer, loss=custom_xentropy, metrics=['accuracy'])
     return model
     

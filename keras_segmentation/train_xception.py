@@ -3,6 +3,7 @@ from data_generator import DataGenerator
 from keras.callbacks import ModelCheckpoint, TensorBoard
 from keras.optimizers import Adam
 import numpy as np
+from xception_model import custom_xentropy
 
 IMG_SIZE = (256,256)
 NUM_CHANNELS = 3

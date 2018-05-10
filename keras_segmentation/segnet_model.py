@@ -9,7 +9,7 @@ from keras.layers.convolutional import Conv2D, MaxPooling2D, UpSampling2D, ZeroP
 # from keras.layers.convolutional import Convolution1D, MaxPooling1D
 # from keras.layers.recurrent import LSTM
 # from keras.layers.advanced_activations import LeakyReLU
-# from keras.optimizers import Adam, SGD
+from keras.optimizers import Adam, SGD
 # from keras.layers.embeddings import Embedding
 # from keras.utils import np_utils
 # from keras.regularizers import ActivityRegularizer
@@ -50,10 +50,10 @@ def segnet(nClasses, optimizer=None, input_height=360, input_width=480):
     model.add(Activation('relu'))
     
     # decoder
-    model.add(ZeroPadding2D(padding=(pad, pad)))
-    model.add(Conv2D(512, (kernel, kernel), padding='valid'))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
+    # model.add(ZeroPadding2D(padding=(pad, pad)))
+    # model.add(Conv2D(512, (kernel, kernel), padding='valid'))
+    # model.add(BatchNormalization())
+    # model.add(Activation('relu'))
     
     model.add(UpSampling2D(size=(pool_size, pool_size)))
     model.add(ZeroPadding2D(padding=(pad, pad)))
@@ -61,17 +61,17 @@ def segnet(nClasses, optimizer=None, input_height=360, input_width=480):
     model.add(BatchNormalization())
     model.add(Activation('relu'))
     
-    model.add(UpSampling2D(size=(pool_size, pool_size)))
-    model.add(ZeroPadding2D(padding=(pad, pad)))
-    model.add(Conv2D(128, (kernel, kernel), padding='valid'))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
+    # model.add(UpSampling2D(size=(pool_size, pool_size)))
+    # model.add(ZeroPadding2D(padding=(pad, pad)))
+    # model.add(Conv2D(128, (kernel, kernel), padding='valid'))
+    # model.add(BatchNormalization())
+    # model.add(Activation('relu'))
     
-    model.add(UpSampling2D(size=(pool_size, pool_size)))
-    model.add(ZeroPadding2D(padding=(pad, pad)))
-    model.add(Conv2D(filter_size, (kernel, kernel), padding='valid'))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
+    # model.add(UpSampling2D(size=(pool_size, pool_size)))
+    # model.add(ZeroPadding2D(padding=(pad, pad)))
+    # model.add(Conv2D(filter_size, (kernel, kernel), padding='valid'))
+    # model.add(BatchNormalization())
+    # model.add(Activation('relu'))
     
     model.add(Conv2D(nClasses, (1, 1), padding='valid'))
     
@@ -95,7 +95,8 @@ def segnet(nClasses, optimizer=None, input_height=360, input_width=480):
 if __name__ == "__main__":
     import numpy as np
     from keras.losses import categorical_crossentropy
-    images = np.load("./pascal_images.npy")
-    labels = np.load("./pascal_labels.npy")
+    # images = np.load("./pascal_images.npy")
+    # labels = np.load("./pascal_labels.npy")
     
     model = segnet(459, Adam(), 256, 256)
+    model.summary()
